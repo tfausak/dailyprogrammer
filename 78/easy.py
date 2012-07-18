@@ -51,14 +51,15 @@ def press_key(key, alt=False, caps=False, ctrl=False, shift=False):
     """
     if key not in "\t\n ',-./0123456789;=[\\]`abcdefghijklmnopqrstuvwxyz":
         raise ValueError('Invalid key')
-
-    key = key.lower()
     if ctrl or alt:
         raise NotImplementedError('Modifier keys not supported')
-    elif shift ^ caps:
-        if key in 'abcdefghijklmnopqrstuvwxyz':
+
+    key = key.lower()
+    if key in '\t\n abcdefghijklmnopqrstuvwxyz':
+        if caps ^ shift:
             key = key.upper()
-        elif key not in '\t\n ':
+    else:
+        if shift:
             lower = r"',-./0123456789;=[\]`"
             upper = r'"<_>?)!@#$%^&*(:+{|}~'
             key = dict(zip(lower, upper))[key]
