@@ -65,15 +65,41 @@ def press_key(key, alt=False, caps=False, ctrl=False, shift=False):
     return key
 
 
+def read_string(string):
+    """Read a string of keypresses and convert them to output.
+    """
+    output = ''
+    alt = False
+    caps = False
+    ctrl = False
+    shift = False
+    state = 0
+    for index in range(len(string)):
+        character = string[index]
+        if state == 0:
+            if character == '^':
+                state = 1
+            else:
+                output += press_key(character,
+                    alt=alt, caps=caps, ctrl=ctrl, shift=shift)
+        elif state == 1:
+            character = character.lower()
+            if character == 'a':
+                alt = not alt
+            elif character == 'c':
+                caps = not caps
+            elif character == 't':
+                ctrl = not ctrl
+            elif character == 's':
+                shift = not shift
+            else:
+                raise ValueError('Unknown modifier')
+            state = 0
+    return output
+
+
 def main(args):
-    print press_key('a')
-    print press_key('a', shift=True)
-    print press_key('a', caps=True)
-    print press_key('a', caps=True, shift=True)
-    print press_key(' ')
-    print press_key(' ', shift=True)
-    print press_key(';')
-    print press_key(';', shift=True)
+    print read_string('^sm^Sy e-mail address ^s9^Sto send the ^s444^S to^s0^S is ^cfake^s2^Sgmail.com^C')
 
 
 if __name__ == '__main__':
