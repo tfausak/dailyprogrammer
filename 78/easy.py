@@ -100,7 +100,8 @@ def read_string(string):
 
 
 def main(args):
-    print read_string('^sm^Sy e-mail address ^s9^Sto send the ^s444^S to^s0^S is ^cfake^s2^Sgmail.com^C')
+    for line in sys.stdin:
+        print read_string(line.strip())
 
 
 if __name__ == '__main__':
