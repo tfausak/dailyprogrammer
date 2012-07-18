@@ -47,7 +47,7 @@ you should output
 import sys
 
 def press_key(key, alt=False, caps=False, ctrl=False, shift=False):
-    """
+    """Simulate a key press.
     """
     if key not in "\t\n ',-./0123456789;=[\\]`abcdefghijklmnopqrstuvwxyz":
         raise ValueError('Invalid key')
