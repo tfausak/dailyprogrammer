@@ -59,29 +59,9 @@ def press_key(key, alt=False, caps=False, ctrl=False, shift=False):
         if key in 'abcdefghijklmnopqrstuvwxyz':
             key = key.upper()
         elif key not in '\t\n ':
-            key = {
-                ',': '<',
-                '-': '_',
-                '.': '>',
-                '/': '?',
-                '0': ')',
-                '1': '!',
-                '2': '@',
-                '3': '#',
-                '4': '$',
-                '5': '%',
-                '6': '^',
-                '7': '&',
-                '8': '*',
-                '9': '(',
-                ';': ':',
-                '=': '+',
-                '[': '{',
-                '\'': '"',
-                '\\': '|',
-                ']': '}',
-                '`': '~',
-            }[key]
+            lower = r"',-./0123456789;=[\]`"
+            upper = r'"<_>?)!@#$%^&*(:+{|}~'
+            key = dict(zip(lower, upper))[key]
     return key
 
 
