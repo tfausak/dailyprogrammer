@@ -23,9 +23,7 @@ import sys
 
 
 def step_count(start, stop, steps):
-    step = abs(start - stop) / (steps - 1)
-    if start > stop:
-        step *= -1
+    step = (stop - start) / (steps - 1)
     return [start + (n * step) for n in range(steps)]
 
 
