@@ -24,11 +24,11 @@ import sys
 
 def step_count(start, stop, steps):
     step = (stop - start) / (steps - 1)
-    return [start + (n * step) for n in range(steps)]
+    return (start + (n * step) for n in range(steps))
 
 
 def main(args):
-    print step_count(float(args[0]), float(args[1]), int(args[2]))
+    print list(step_count(float(args[0]), float(args[1]), int(args[2])))
 
 
 if __name__ == '__main__':
