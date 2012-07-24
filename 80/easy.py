@@ -55,6 +55,15 @@ def main(args):
             key = ''.join(sorted(word))
             words[key].append(word)
 
+    max_length = -1
+    longest_family = None
+    for key, value in words.items():
+        length = len(value)
+        if length > max_length:
+            max_length = length
+            longest_family = value
+    print max_length, longest_family
+
     for arg in args:
         word = arg.strip().lower()
         key = ''.join(sorted(word))
