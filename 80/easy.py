@@ -52,8 +52,10 @@ def main(args):
         words = sorted(word.lower().strip() for word in dictionary.readlines())
 
     for word in args:
-        # find anagrams
-        pass
+        word = word.lower().strip()
+        letters = sorted(word)
+        matches = [word_ for word_ in words if sorted(word_) == letters]
+        print word, matches
 
 
 if __name__ == '__main__':
