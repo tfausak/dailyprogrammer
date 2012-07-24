@@ -43,19 +43,25 @@ words: "AMBLERS", "BLAMERS", "LAMBERS", "MARBLES" and "RAMBLES".
 What is the largest anagram family in the dictionary I supplied?
 What is the second largest?
 """
+from collections import defaultdict
 import sys
 
 
 def main(args):
-    words = []
+    words = defaultdict(list)
     with open('dictionary.txt') as dictionary:
-        words = sorted(word.lower().strip() for word in dictionary.readlines())
+        for line in dictionary:
+            word = line.strip().lower()
+            key = ''.join(sorted(word))
+            words[key].append(word)
 
-    for word in args:
-        word = word.lower().strip()
-        letters = sorted(word)
-        matches = [word_ for word_ in words if sorted(word_) == letters]
-        print word, matches
+    for arg in args:
+        word = arg.strip().lower()
+        key = ''.join(sorted(word))
+        print word
+        for anagram in words[key]:
+            if anagram != word:
+                print '  {0}'.format(anagram)
 
 
 if __name__ == '__main__':
