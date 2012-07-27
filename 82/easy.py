@@ -44,8 +44,12 @@ def substrings(n, alphabet=string.lowercase):
 
 def main(args):
     for arg in args:
-        n = int(arg)
-        result = substrings(n)
+        try:
+            n = int(arg)
+            result = substrings(n)
+        except ValueError:
+            letters = ''.join(sorted(set(arg)))
+            result = substrings(len(letters), alphabet=letters)
         print n, len(result), result
 
 
