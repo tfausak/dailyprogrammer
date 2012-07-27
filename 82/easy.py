@@ -38,6 +38,7 @@ def substrings(n, alphabet=string.lowercase):
     for start in range(n):
         for length in range(n - start):
             result.append(alphabet[start:start + length + 1])
+    assert len(result) == (n * (n + 1)) / 2
     return result
 
 
