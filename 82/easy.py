@@ -29,11 +29,23 @@ BONUS 2: Modify your function to take a string as an argument. Make
 sure all substrings in your output are still unique (i.e., there
 are two "l" substrings in "hello", but you should output only one).
 """
+import string
 import sys
 
 
+def substrings(n, alphabet=string.lowercase):
+    result = []
+    for start in range(n):
+        for length in range(n - start):
+            result.append(alphabet[start:start + length + 1])
+    return result
+
+
 def main(args):
-    pass
+    for arg in args:
+        n = int(arg)
+        result = substrings(n)
+        print n, len(result), result
 
 
 if __name__ == '__main__':
