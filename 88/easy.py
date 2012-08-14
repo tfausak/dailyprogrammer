@@ -47,55 +47,32 @@ encrypted with a word that I've used in this post:
 As an additional challenge, attempt to pronounce "Vigenère" properly.
 I think it's like "Viche-en-ere", but I'm not entirely sure.
 """
+import re
 import sys
 
 
-def vigenere(key, message, flag=False):
-    cipher = ''
-    for index, character in enumerate(message):
-        x = ord(character)
-        x -= 65
-        character = key[index % len(key)]
-        y = ord(character)
-        y -= 65
-        if flag:
-            x -= y
-        else:
-            x += y
-        x %= 26
-        x += 65
-        character = chr(x)
-        cipher += character
-    return cipher
+def vigenere(key, message, reverse=False):
+    key = re.sub('[^A-Z]', '', key.upper())
+    message = re.sub('[^A-Z]', '', message.upper())
+    return ''.join(chr(((
+                (ord(character) - 65) +
+                (-1 if reverse else 1) *
+                (ord(key[index % len(key)]) - 65)
+            ) % 26) + 65)
+        for index, character in enumerate(message))
 
 
 def main(args):
-    print vigenere('GLADOS', 'THECAKEISALIE')
-    keys = [
-        'a', 'added', 'additional', 'all', 'an', 'and', 'anyway',
-        'are', 'article', 'as', 'assume', 'attempt', 'b', 'because',
-        'becomes', 'been', 'beginning', 'bonus', 'both', 'but',
-        'by', 'c', 'challenge', 'characters', 'chart', 'cipher',
-        'ciphertext', 'cleartext', 'combine', 'cover', 'decrypt',
-        'description', 'e', 'each', 'easy', 'encrypt', 'encrypted',
-        'entire', 'entirely', 'equal', 'etc', 'explains', 'famous',
-        'following', 'for', 'form', 'from', 'full', 'funtions',
-        'g', 'given', 'glados', 'gladosgladosg', 'has', 'here',
-        'heres', 'how', 'i', 'ie', 'if', 'im', 'implement', 'in',
-        'instance', 'is', 'it', 'its', 'ive', 'k', 'key', 'larger',
-        'lets', 'letter', 'like', 'message', 'messages', 'needed',
-        'new', 'no', 'not', 'now', 'of', 'often', 'one', 'optional',
-        'over', 'post', 'produce', 'pronounce', 'properly', 'repeated',
-        'right', 's', 'sake', 'see', 'short', 'simplicity', 'so',
-        'spaces', 'starts', 'sum', 'sure', 'take', 'text', 'than',
-        'that', 'the', 'thecakeisalie', 'then', 'there', 'think',
-        'this', 'to', 'today', 'uppercase', 'used', 'vicheenere',
-        'vigenere', 'want', 'well', 'which', 'wikipedia', 'with',
-        'word', 'works', 'write', 'you', 'z',
-    ]
-    for key in keys:
-        print key, vigenere(key.upper(), 'HSULAREFOTXNMYNJOUZWYILGPRYZQVBBZABLBWHMFGWFVPMYWAVVTYISCIZRLVGOPGBRAKLUGJUZGLNBASTUQAGAVDZIGZFFWVLZSAZRGPVXUCUZBYLRXZSAZRYIHMIMTOJBZFZDEYMFPMAGSMUGBHUVYTSABBAISKXVUCAQABLDETIFGICRVWEWHSWECBVJMQGPRIBYYMBSAPOFRIMOLBUXFIIMAGCEOFWOXHAKUZISYMAHUOKSWOVGBULIBPICYNBBXJXSIXRANNBTVGSNKR', flag=True).lower()
-
+    print vigenere('glados', 'thecakeisalie')
+    cipher = (
+        'HSULAREFOTXNMYNJOUZWYILGPRYZQVBBZABLBWHMFGWFVPMYWAVVTYISCIZRLVGOPGBR'
+        'AKLUGJUZGLNBASTUQAGAVDZIGZFFWVLZSAZRGPVXUCUZBYLRXZSAZRYIHMIMTOJBZFZD'
+        'EYMFPMAGSMUGBHUVYTSABBAISKXVUCAQABLDETIFGICRVWEWHSWECBVJMQGPRIBYYMBS'
+        'APOFRIMOLBUXFIIMAGCEOFWOXHAKUZISYMAHUOKSWOVGBULIBPICYNBBXJXSIXRANNBT'
+        'VGSNKR'
+    )
+    for key in re.findall(r'[A-Za-z]+', __doc__):
+        print key, vigenere(key, cipher, reverse=True).lower()
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv[1:]))
