@@ -42,9 +42,13 @@ def rle(string):
     return result
 
 
+def elr(encoding):
+    return ''.join(character * length for length, character in encoding)
+
+
 def main(args):
     for arg in args:
-        print arg, rle(arg)
+        print arg, rle(arg), elr(rle(arg))
 
 
 if __name__ == '__main__':
